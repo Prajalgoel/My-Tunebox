@@ -7,10 +7,154 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="./src/output.css">
-</head >
+    <link rel="stylesheet" href="style.css">
+</head>
 
-<body class="">
-    
+<body class="bg-black text-white relative">
+    <div class="layout grid grid-cols-11 min-h-screen w-[100vw]">
+        <div class="left col-span-3 pl-4 pt-3 pr-3 flex flex-col relative  ">
+
+            <div class="logo flex gap-1 items-center mb-4">
+                <img src="svg/logo.svg" alt="">
+                <div class="name text-base font-bold">Spotify</div>
+            </div>
+
+            <div class="items flex flex-col gap-6 bg-[#2a1f1f] p-3 rounded-md ">
+                <div
+                    class="home flex items-center gap-6 ml-2 cursor-pointer text-[#b3b3b3] hover:text-white ease-in-out duration-100">
+                    <img src="svg/home.svg" width="25px" alt="">
+                    <div class="font-bold text-lg text-[#b3b3b3] hover:text-white ease-in-out duration-100">Home</div>
+                </div>
+
+                <div class="search flex items-center gap-6 ml-2 cursor-pointer">
+                    <img src="svg/search.svg" width="25px" alt="">
+                    <div class="font-bold text-lg text-[#b3b3b3] hover:text-white ease-in-out duration-100">Search</div>
+                </div>
+            </div>
+
+            <div class="library flex flex-col mt-2 h-fit">
+                <div class="lib-heading flex gap-6 items-center w-full bg-[#2a1f1f] p-3 rounded-md cursor-pointer">
+                    <img src="svg/library.svg" alt="" class="">
+                    <div class="font-semibold text-lg text-[#b3b3b3] hover:text-white ease-in-out duration-100">Your
+                        Library</div>
+                    <img src="svg/plus.svg" class="ml-auto mr-2" alt="">
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="right col-span-8 ml-0 p-2">
+            <div class="header flex items-center justify-between px-2 sticky top-0">
+                <div class="arrows flex items-center gap-4">
+                    <div><img src="svg/left.svg" class="invert cursor-pointer" alt=""></div>
+                    <div><img src="svg/right.svg" class="invert cursor-pointer" alt=""></div>
+                </div>
+                <div class="buttons flex items-center gap-5">
+                    <div class="signup">
+                        <button class="text-[14px] text-[#b3b3b3] font-bold cursor-pointer">Sign Up</button>
+                    </div>
+                    <div class="LogIn">
+                        <button
+                            class="bg-white text-black text-[16px] font-bold rounded-full px-7 py-2 cursor-pointer">Log
+                            in</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="playlists bg-[#131212] mt-3 p-3 rounded-md overflow-y-scroll max-h-[90vh]">
+                <div class="artists flex flex-col gap-2 ">
+                    <h1 class="text-[24px] font-bold hover:underline cursor-pointer ml-2">Popular Artists</h1>
+                    <div class="artistcards p-1 pl-3 flex flex-wrap gap-x-1 gap-y-5 ">
+
+                        <div
+                            class="card ArijitSIngh hover:bg-[#1e1d1d] ease-linear duration-100 w-fit rounded-lg p-3 cursor-pointer ">
+                            <div class="imageBox relative  mb-2">
+                                <div
+                                    class="play bg-green-500 w-fit rounded-full p-3 absolute top-[100px] right-3 opacity-0">
+                                    <img src="svg/play.svg" alt="">
+                                </div>
+                                <img src="https://i.scdn.co/image/ab676161000051745ba2d75eb08a2d672f9b69b7" alt=""
+                                    class="rounded-full w-[145px] h-[145px] object-cover">
+                            </div>
+                            <div class="name text-base font-normal hover:underline ">
+                                Arijit Singh
+                            </div>
+                            <div class="profession text-[#b3b3b3] text-base font-normal">
+                                Artist
+                            </div>
+                        </div>
+
+                        
+                        <div
+                            class="card ArijitSIngh hover:bg-[#1e1d1d] ease-linear duration-100 w-fit rounded-lg p-3 cursor-pointer ">
+                            <div class="imageBox relative  mb-2">
+                                <div
+                                    class="play bg-green-500 w-fit rounded-full p-3 absolute top-[100px] right-3 opacity-0">
+                                    <img src="svg/play.svg" alt="">
+                                </div>
+                                <img src="https://i.scdn.co/image/ab676161000051745ba2d75eb08a2d672f9b69b7" alt=""
+                                    class="rounded-full w-[145px] h-[145px] object-cover">
+                            </div>
+                            <div class="name text-base font-normal hover:underline ">
+                                Arijit Singh
+                            </div>
+                            <div class="profession text-[#b3b3b3] text-base font-normal">
+                                Artist
+                            </div>
+                        </div>
+
+                        
+                        <div
+                            class="card ArijitSIngh hover:bg-[#1e1d1d] ease-linear duration-100 w-fit rounded-lg p-3 cursor-pointer ">
+                            <div class="imageBox relative  mb-2">
+                                <div
+                                    class="play bg-green-500 w-fit rounded-full p-3 absolute top-[100px] right-3 opacity-0">
+                                    <img src="svg/play.svg" alt="">
+                                </div>
+                                <img src="https://i.scdn.co/image/ab676161000051745ba2d75eb08a2d672f9b69b7" alt=""
+                                    class="rounded-full w-[145px] h-[145px] object-cover">
+                            </div>
+                            <div class="name text-base font-normal hover:underline ">
+                                Arijit Singh
+                            </div>
+                            <div class="profession text-[#b3b3b3] text-base font-normal">
+                                Artist
+                            </div>
+                        </div>
+
+                        <div
+                            class="card ArijitSIngh hover:bg-[#1e1d1d] ease-linear duration-100 w-fit rounded-lg p-3 cursor-pointer ">
+                            <div class="imageBox relative  mb-2">
+                                <div
+                                    class="play bg-green-500 w-fit rounded-full p-3 absolute top-[100px] right-3 opacity-0">
+                                    <img src="svg/play.svg" alt="">
+                                </div>
+                                <img src="https://i.scdn.co/image/ab676161000051745ba2d75eb08a2d672f9b69b7" alt=""
+                                    class="rounded-full w-[145px] h-[145px] object-cover">
+                            </div>
+                            <div class="name text-base font-normal hover:underline ">
+                                Arijit Singh
+                            </div>
+                            <div class="profession text-[#b3b3b3] text-base font-normal">
+                                Artist
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="playBar fixed bottom-0  w-full flex justify-center py-2 bg-black ">
+        <div class="playButtons flex gap-6">
+            <img src="svg/previous.svg" alt="" class=" cursor-pointer ">
+            <img src="svg/play.svg" alt="" class="p-2 bg-white rounded-full cursor-pointer ">
+            <img src="svg/next.svg" alt="" class=" cursor-pointer ">
+        </div>
+    </div>
 </body>
+<script src="script.js"></script>
 
 </html>
