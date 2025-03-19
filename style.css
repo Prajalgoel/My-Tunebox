@@ -45,3 +45,42 @@
     background: #555;
     /* Lighter color when hovered */
 }
+
+@keyframes wave {
+    0%{
+        height: 15px;
+    }
+    50%{
+        height: 23px;
+    }
+    100%{
+        height: 15px;
+    }
+}
+
+.playBar .playBarLeft .waves .wave{
+    animation: wave 1s ease-in-out  unset ;
+}
+
+.playBar .playBarLeft .waves .wave2 {
+    animation-delay: 0.2s;
+}
+.playBar .playBarLeft .waves .wave3 {
+    animation-delay: 0.4s;
+}
+
+.popularSongsCards{
+    scroll-behavior: smooth;
+}
+
+.popularSongsCards::-webkit-scrollbar{
+    display: none;
+}
+
+.popularArtistsCards{
+    scroll-behavior: smooth;
+}
+
+.popularArtistsCards::-webkit-scrollbar{
+    display: none;
+}
