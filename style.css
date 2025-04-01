@@ -46,7 +46,7 @@
     /* Lighter color when hovered */
 }
 
-@keyframes wave {
+@keyframes waveAnimation {
     0%{
         height: 15px;
     }
@@ -58,8 +58,8 @@
     }
 }
 
-.playBar .playBarLeft .waves .wave{
-    animation: wave 1s ease-in-out  unset ;
+.active{
+    animation: waveAnimation 1s ease-in-out infinite ;
 }
 
 .playBar .playBarLeft .waves .wave2 {

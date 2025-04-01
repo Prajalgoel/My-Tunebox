@@ -4,46 +4,43 @@ let libSongs = document.querySelector('.libSongs')
 let libSongDetails = []
 let libSongThumnails = []
 
+let playlist
+let songInPlaylist
 let playedSong
 let playedSongId
 let previousSongId
 let playedSongIndex
 let audio = null
 
-let popularSongsCards = document.querySelector(".popularSongsCards")
-let popularSongsHeadingLeftArrow = document.querySelector(".popularSongsHeadingLeftArrow")
-let popularSongsHeadingRightArrow = document.querySelector(".popularSongsHeadingRightArrow")
+let playSong = function () { }
 
-let popularArtistsCards = document.querySelector(".popularArtistsCards")
-let popularArtistsHeadingLeftArrow = document.querySelector(".popularArtistsHeadingLeftArrow")
-let popularArtistsHeadingRightArrow = document.querySelector(".popularArtistsHeadingRightArrow")
-
-popularSongsHeadingLeftArrow.addEventListener('click', () => {
-    popularSongsCards.scrollLeft -= 300
+document.querySelector(".popularSongsHeadingLeftArrow").addEventListener('click', () => {
+    document.querySelector(".popularSongsCards").scrollLeft -= 300
 })
 
-popularSongsHeadingRightArrow.addEventListener('click', () => {
-    popularSongsCards.scrollLeft += 300
+document.querySelector(".popularSongsHeadingRightArrow").addEventListener('click', () => {
+    document.querySelector(".popularSongsCards").scrollLeft += 300
 })
 
-popularArtistsHeadingLeftArrow.addEventListener('click', () => {
-    popularArtistsCards.scrollLeft -= 300
+document.querySelector(".popularArtistsHeadingLeftArrow").addEventListener('click', () => {
+    document.querySelector(".popularArtistsCards").scrollLeft -= 300
 })
 
-popularArtistsHeadingRightArrow.addEventListener('click', () => {
-    popularArtistsCards.scrollLeft += 300
+document.querySelector(".popularArtistsHeadingRightArrow").addEventListener('click', () => {
+    document.querySelector(".popularArtistsCards").scrollLeft += 300
 })
 
-let seekbarPlayPause = document.querySelector('#seekbarPlayPause')
 
-seekbarPlayPause.addEventListener('click', () => {
+document.querySelector('#seekbarPlayPause').addEventListener('click', () => {
     if (audio.paused) {
         audio.play()
-        seekbarPlayPause.src = "svg/pause.svg"
+        document.querySelector('#seekbarPlayPause').src = "svg/pause.svg"
+        songInPlaylist.querySelector('.playPause').src = "svg/pause.svg"
     }
     else {
         audio.pause()
-        seekbarPlayPause.src = "svg/play.svg"
+        document.querySelector('#seekbarPlayPause').src = "svg/play.svg"
+        songInPlaylist.querySelector('.playPause').src = "svg/play.svg"
     }
 
 })
@@ -57,32 +54,97 @@ let convertInFormat = function (totalseconds) {
 
 
 document.addEventListener('keydown', (e) => {
-    e.preventDefault()
     if (e.code === "Space") {
+        e.preventDefault()
         if (audio.paused) {
             audio.play()
             seekbarPlayPause.src = "svg/pause.svg"
+            songInPlaylist.querySelector('.playPause').src = "svg/pause.svg"
         }
         else {
             audio.pause()
             seekbarPlayPause.src = "svg/play.svg"
+            songInPlaylist.querySelector('.playPause').src = "svg/play.svg"
         }
     }
 })
 
-let loop = document.querySelector('#loop')
-
-loop.addEventListener('click', () => {
-    if (loop.src.endsWith("svg/loop.svg")) {
+document.querySelector('#loop').addEventListener('click', () => {
+    if (document.querySelector('#loop').src.endsWith("svg/loop.svg")) {
         audio.loop = true
-        loop.src = "svg/noLoop.svg" 
+        document.querySelector('#loop').src = "svg/noLoop.svg"
     }
 
-    else{
+    else {
         audio.loop = false
-        loop.src = "svg/loop.svg"
+        document.querySelector('#loop').src = "svg/loop.svg"
     }
 })
+
+let seekBar = document.querySelector('.seekBar')
+let seekBarCircle = document.querySelector('.seekBarCircle')
+
+seekBar.addEventListener('click', (e) => {
+    if (audio) {
+        let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100
+        seekBarCircle.style.left = percent + "%"
+        audio.currentTime = (audio.duration * percent) / 100
+    }
+})
+
+let volumeBtn = document.querySelector('.volumeBtn')
+let volumnSeekbar = document.querySelector('.volumnSeekbar')
+let volumeSeekbarCircle = document.querySelector('.volumeSeekbarCircle')
+
+volumeBtn.addEventListener('click', () => {
+    if (audio) {
+        if (volumeBtn.src.endsWith('svg/volumn.svg')) {
+            audio.volume = 0
+            volumeBtn.src = "svg/mute.svg"
+            volumeSeekbarCircle.style.left = "0%"
+        }
+        else {
+            audio.volume = 1
+            volumeBtn.src = "svg/volumn.svg"
+            volumeSeekbarCircle.style.left = "100%"
+        }
+    }
+})
+
+volumnSeekbar.addEventListener('click', (e) => {
+    if (audio) {
+        let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100
+        if (percent == 0) {
+            volumeBtn.src = "svg/mute.svg"
+        } else {
+            volumeBtn.src = "svg/volumn.svg"
+        }
+        volumeSeekbarCircle.style.left = percent + "%"
+        audio.volume = percent / 100
+
+    }
+})
+
+let playNextSong = function () { 
+    if (audio && playedSongId < playlist.length) {
+        playedSongId = parseInt(playedSongId) + 1
+        playedSongIndex = parseInt(playedSongIndex) + 1
+        playSong()
+    }
+}
+
+document.querySelector('#next').addEventListener('click', (e) => {
+    playNextSong()
+})
+
+document.querySelector('#previous').addEventListener('click', (e) => {
+    if (audio && playedSongId > 1) {
+        playedSongId = parseInt(playedSongId) - 1
+        playedSongIndex = parseInt(playedSongIndex) - 1
+        playSong()
+    }
+})
+
 
 async function getSongs() {
     let a = await fetch("http://127.0.0.1:3000/songs/LibSongs/")
@@ -98,9 +160,7 @@ async function getSongs() {
     for (let index = 0; index < as.length; index++) {
         if (as[index].href.endsWith('.mp3')) {
             songs.push(as[index].href)
-
         }
-
     }
 
     async function getThumbnails() {
@@ -163,7 +223,7 @@ getSongs().then(() => {
 })
 
 function renderLibSongs() {
-    // libSongs.innerHTML = '';
+    libSongs.innerHTML = '';
     let index = 1
     libSongDetails.forEach((e) => {
         let li = document.createElement('li')
@@ -182,9 +242,7 @@ function renderLibSongs() {
             <div class="songArtist">${e.Artist}</div>
         </div>
     
-         <div class="play ml-auto pr-2" id= "playPause">
-             <img src="svg/play.svg" alt="" class="p-2 bg-white rounded-full  ">
-        </div>
+        <img src="svg/play.svg" alt="" class="playPause p-2 bg-white rounded-full play ml-auto pr-2 ">
         `
         index++
 
@@ -194,6 +252,8 @@ function renderLibSongs() {
 
 function playLibSongs() {
     libSongs.addEventListener('click', (e) => {
+        if (!e.target.closest('li')) return;
+
         if (audio) {
             previousSongId = playedSongId
             if (e.target.closest('li').id == previousSongId) {
@@ -202,57 +262,94 @@ function playLibSongs() {
             }
         }
 
-        seekbarPlayPause.src = "svg/pause.svg"
+        playlist = Array.from(libSongs.children)
 
-        libSongDetails.forEach((e) => {
-            e.currentState = false
-        })
         playedSongId = e.target.closest('li').id
         playedSongIndex = libSongDetails.findIndex((song) => song.id == playedSongId)
-        playedSong = libSongDetails.find((song) => song.id == playedSongId)
 
-        libSongDetails[playedSongIndex].currentState = true
-        console.log(playedSong);
-        console.log(libSongDetails);
-
-        if (audio) {
-            audio.pause()
-            audio.currentTime = 0
+        let playPauseHandler = (e) => {
+            if (songInPlaylist.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
+                audio.pause()
+                songInPlaylist.querySelector('.playPause').src = "svg/play.svg"
+                seekbarPlayPause.src = "svg/play.svg"
+            }
+            else {
+                audio.play()
+                songInPlaylist.querySelector('.playPause').src = "svg/pause.svg"
+                seekbarPlayPause.src = "svg/pause.svg"
+            }
         }
 
-        audio = new Audio(playedSong.songLink)
-        audio.play()
+        playSong = function () {
+            playlist.forEach((e) => {
+                e.querySelector('.playPause').src = "svg/play.svg"
+                e.querySelector('.songName').style.color = "white"
+            })
 
-        let currentTime = document.querySelector('.currentTime')
-        let duration = document.querySelector('.duration')
+            playedSong = libSongDetails.find((song) => song.id == playedSongId)
 
-        let seekBar = document.querySelector('.seekBar')
-        let seekBarCircle = document.querySelector('.seekBarCircle')
+            libSongDetails.forEach((e) => {
+                e.currentState = false
+            })
 
-        audio.addEventListener('loadedmetadata', () => {
-            duration.innerHTML = convertInFormat(audio.duration);
-        });
 
-        audio.addEventListener('timeupdate', () => {
-            currentTime.innerHTML = convertInFormat(audio.currentTime)
-            seekBarCircle.style.left = (audio.currentTime / audio.duration) * 100 + "%"
-        })
+            libSongDetails[playedSongIndex].currentState = true
+            console.log(playedSong);
+            console.log(libSongDetails);
 
-        // change seekbar details
-        let playBarLeftSongPhoto = document.querySelector('.playBarLeftSongPhoto')
-        let playBArLeftSongName = document.querySelector('.playBArLeftSongName')
-        let playBArLeftSongArtist = document.querySelector('.playBArLeftSongArtist')
+            if (audio) {
+                audio.pause()
+                audio.currentTime = 0
+            }
 
-        playBarLeftSongPhoto.src = playedSong.libSongThumnail
-        playBArLeftSongName.innerHTML = playedSong.name
-        playBArLeftSongArtist.innerHTML = playedSong.Artist
+            audio = new Audio(playedSong.songLink)
+            audio.play()
 
-        seekBar.addEventListener('click', (e) => {
-            let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100
-            seekBarCircle.style.left = percent + "%"
-            audio.currentTime = (audio.duration * percent) / 100
-        })
+            songInPlaylist = playlist.find((e) => e.id == playedSongId)
 
+            songInPlaylist.querySelector('.playPause').src = "svg/pause.svg"
+            songInPlaylist.querySelector('.songName').style.color = "yellow"
+            seekbarPlayPause.src = "svg/pause.svg"
+
+            
+
+            songInPlaylist.querySelector('.playPause').removeEventListener('click', playPauseHandler)
+
+            songInPlaylist.querySelector('.playPause').addEventListener('click', playPauseHandler)
+
+            audio.addEventListener('loadedmetadata', () => {
+                document.querySelector('.duration').innerHTML = convertInFormat(audio.duration);
+            });
+
+            audio.addEventListener('timeupdate', () => {
+                document.querySelector('.currentTime').innerHTML = convertInFormat(audio.currentTime)
+                seekBarCircle.style.left = (audio.currentTime / audio.duration) * 100 + "%"
+            })
+
+            audio.addEventListener('play', () => {
+                document.querySelectorAll('.wave').forEach((e) => {
+                    e.classList.add('active')
+                })
+            })
+            audio.addEventListener('pause', () => {
+                document.querySelectorAll('.wave').forEach((e) => {
+                    e.classList.remove('active')
+                })
+            })
+
+            // change seekbar details
+            document.querySelector('.playBarLeftSongPhoto').src = playedSong.libSongThumnail
+            document.querySelector('.playBArLeftSongName').innerHTML = playedSong.name
+            document.querySelector('.playBArLeftSongArtist').innerHTML = playedSong.Artist
+
+            audio.addEventListener('timeupdate', () => {
+                if (audio.duration === audio.currentTime) {
+                    playNextSong()
+                }
+            })
+        }
+
+        playSong()
 
     })
 
