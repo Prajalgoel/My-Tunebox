@@ -145,6 +145,19 @@ document.querySelector('#previous').addEventListener('click', (e) => {
     }
 })
 
+document.querySelector('.yourSongsHeading').addEventListener('click', (e) => {
+    if (document.querySelector('.libPlaylistHeadingArrowBtn').src.endsWith('svg/downArrow.svg')) {
+        document.querySelector('.libPlaylistHeadingArrowBtn').src = "svg/upArrow.svg"
+        libSongs.classList.remove('library-collapsed')
+        libSongs.classList.add('library-expanded')
+    }else{
+        document.querySelector('.libPlaylistHeadingArrowBtn').src = "svg/downArrow.svg"
+        libSongs.classList.remove('library-expanded')
+        libSongs.classList.add('library-collapsed')
+        
+    }
+})
+
 
 async function getSongs() {
     let a = await fetch("http://127.0.0.1:3000/songs/LibSongs/")
@@ -227,7 +240,7 @@ function renderLibSongs() {
     let index = 1
     libSongDetails.forEach((e) => {
         let li = document.createElement('li')
-        li.className = `flex items-center gap-3 cursor-pointer hover:scale-105 hover:ease-in hover:duration-100`
+        li.className = `flex items-center gap-3 cursor-pointer hover:scale-105 hover:ease-in hover:duration-100 pb-2`
         li.id = e.id
 
         li.innerHTML = `

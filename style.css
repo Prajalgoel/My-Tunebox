@@ -84,3 +84,19 @@
 .popularArtistsCards::-webkit-scrollbar{
     display: none;
 }
+
+/* Initially collapsed */
+.library-collapsed {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
+  
+  /* Expanded state */
+  .library-expanded {
+    max-height: 59vh; /* adjust based on your content */
+    opacity: 1;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
+  
