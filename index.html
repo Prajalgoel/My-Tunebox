@@ -22,22 +22,14 @@
             <div class="library flex flex-col h-fit bg-[#2a1f1f] rounded-md ">
                 <div class="lib-heading flex gap-6 items-center w-full  p-3  cursor-pointer">
                     <img src="svg/library.svg" alt="" class="">
-                    <div class="font-semibold text-lg text-[#b3b3b3] hover:text-white ease-in-out duration-100">
+                    <div class="font-semibold text-lg text-white ease-in-out duration-100">
                         Library</div>
-                    <img src="svg/plus.svg" class="ml-auto mr-2" alt="">
+                    <img src="svg/upArrow.svg" width="30px" class="libPlaylistHeadingArrowBtn ml-auto">
                 </div>
 
                 <div class="libPlaylist yourSongs pl-3">
-                    <div class="yourSongsHeading flex p-2 justify-between cursor-pointer">
-                        <div class="flex gap-3 items-center">
-                            <img src="svg/library.svg" alt="" class="" width="20px">
-                            <div class="font-semibold text-lg text-white "> Your Songs</div>
-                        </div>
-                        <img src="svg/downArrow.svg" width="30px" class="libPlaylistHeadingArrowBtn">
-                        
-                    </div>
                     
-                    <ul class="libSongs flex flex-col gap-5 px-3 mt-3 overflow-y-scroll library-collapsed">
+                    <ul id="Library" class="playlist libSongs flex flex-col gap-3 px-3 mt-3 overflow-y-scroll library-expanded">
                         
                     </ul>
                 </div>
@@ -71,9 +63,9 @@
 
                     </div>
 
-                    <div class="popularSongsCards p-1 pl-3 flex gap-2  overflow-x-auto  ">
+                    <ul id="PopularSongs" class="playlist popularSongsCards p-1 pl-3 flex gap-2  overflow-x-auto  ">
 
-                        <div
+                        <li
                             class="card ArijitSIngh hover:bg-[#1e1d1d] ease-linear duration-100 min-w-[160px] rounded-lg p-3 cursor-pointer ">
                             <div class="imageBox relative  mb-2">
                                 <div
@@ -90,10 +82,10 @@
                             <div class="profession text-[#b3b3b3] text-base font-normal">
                                 Artist
                             </div>
-                        </div>
+                        </li>
                         
 
-                    </div>
+                    </ul>
                 </div>
 
                 <div class="popularArtists flex flex-col gap-2 ">
@@ -111,10 +103,9 @@
 
                     </div>
 
-                    <div class="popularArtistsCards p-1 pl-3 flex gap-2  overflow-x-auto  ">
+                    <div class="dynamicAlbums popularArtistsCards p-1 pl-3 flex gap-2  overflow-x-auto  ">
 
-                        <div
-                            class="card ArijitSIngh hover:bg-[#1e1d1d] ease-linear duration-100 min-w-[160px] rounded-lg p-3 cursor-pointer ">
+                        <div id="ArijitSingh" class="playlist card ArijitSingh hover:bg-[#1e1d1d] ease-linear duration-100 min-w-[160px] rounded-lg p-3 cursor-pointer ">
                             <div class="imageBox relative  mb-2">
                                 <div
                                     class="play bg-green-500 w-fit rounded-full p-3 absolute top-[100px] right-3 opacity-0">
@@ -136,7 +127,7 @@
         </div>
     </div>
 
-    <div class="playBar fixed bottom-0  w-full flex justify-between py-5 bg-black px-3 items-center">
+    <div class="playBar bg-black fixed bottom-0  w-full flex justify-between py-5  px-3 items-center">
         <div class="playBarLeft flex items-center gap-2 ">
             <div class="waves p-2  gap-1 h-[25px] flex items-end">
                 <div class="wave wave1 h-[13px] w-[2px] bg-yellow-400"></div>
