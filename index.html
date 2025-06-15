@@ -12,29 +12,35 @@
 
 <body class="bg-black text-white relative ">
     <div class="layout grid grid-cols-11 min-h-screen ">
-        <div class="left col-span-3 pl-4 pt-3 pr-3 flex flex-col relative  ">
+        <div class="left col-span-3 pl-4 pt-3 pr-3 flex flex-col relative ">
 
-            <div class="logo flex gap-2 items-center mb-4">
+            <div class="logo flex gap-2 items-center mb-4 sticky top-0">
                 <img src="musical-note.png" width="40px" class="bg-white p-2 rounded-full">
                 <div class="name text-xl font-bold">TuneBox</div>
             </div>
 
-            <div class="library flex flex-col h-fit bg-[#2a1f1f] rounded-md ">
-                <div class="lib-heading flex gap-6 items-center w-full  p-3  cursor-pointer">
-                    <img src="svg/library.svg" alt="" class="">
-                    <div class="font-semibold text-lg text-white ease-in-out duration-100">
-                        Library</div>
-                    <img src="svg/upArrow.svg" width="30px" class="libPlaylistHeadingArrowBtn ml-auto">
-                </div>
+            <div class="sidebarPlaylists overflow-y-auto max-h-[80vh]">
+                <div class="library flex flex-col h-fit bg-[#2a1f1f] rounded-md ">
+                    <div class="lib-heading flex gap-6 items-center w-full  p-3  cursor-pointer">
+                        <img src="svg/library.svg" alt="" class="">
+                        <div class="font-semibold text-lg text-white ease-in-out duration-100">
+                            Library</div>
+                        <div class="ml-auto flex items-center gap-4">
+                            <div class="NoOfLibSongs"></div>
+                            <img src="svg/upArrow.svg" width="30px" class="libPlaylistHeadingArrowBtn ml-auto">
+                        </div>
+                    </div>
 
-                <div class="libPlaylist yourSongs pl-3">
-                    
-                    <ul id="Library" class="playlist libSongs flex flex-col gap-3 px-3 mt-3 overflow-y-scroll library-expanded">
-                        
+                    <ul id="LibrarySongs" class="playlist flex flex-col gap-3 px-3 mt-3 overflow-y-auto library-expanded">
+
                     </ul>
+
                 </div>
 
+                
             </div>
+
+
         </div>
 
 
@@ -46,7 +52,7 @@
 
             </div>
 
-            <div class="playlists bg-[#131212] mt-3 p-2 rounded-md max-h-[90vh]">
+            <div class="playlists  bg-[#131212] mt-3 p-2 rounded-md max-h-[90vh]">
 
                 <div class="popularSongs flex flex-col gap-2 ">
                     <div class="popularSongsHeading flex justify-between px-2">
@@ -63,27 +69,7 @@
 
                     </div>
 
-                    <ul id="PopularSongs" class="playlist popularSongsCards p-1 pl-3 flex gap-2  overflow-x-auto  ">
-
-                        <li
-                            class="card ArijitSIngh hover:bg-[#1e1d1d] ease-linear duration-100 min-w-[160px] rounded-lg p-3 cursor-pointer ">
-                            <div class="imageBox relative  mb-2">
-                                <div
-                                    class="play bg-green-500 w-fit rounded-full p-3 absolute top-[100px] right-3 opacity-0">
-                                    <img src="svg/play.svg" alt="">
-                                </div>
-
-                                <img src="https://i.scdn.co/image/ab676161000051745ba2d75eb08a2d672f9b69b7" alt=""
-                                    class="rounded-full w-[145px] h-[145px] object-cover">
-                            </div>
-                            <div class="name text-base font-normal hover:underline ">
-                                Arijit Singh
-                            </div>
-                            <div class="profession text-[#b3b3b3] text-base font-normal">
-                                Artist
-                            </div>
-                        </li>
-                        
+                    <ul id="PopularSongs" class="playlist p-1 pl-3 flex gap-2  overflow-x-auto  ">
 
                     </ul>
                 </div>
@@ -103,23 +89,9 @@
 
                     </div>
 
-                    <div class="dynamicAlbums popularArtistsCards p-1 pl-3 flex gap-2  overflow-x-auto  ">
+                    <ul id="popularArtistsCards" class="dynamicAlbums pl-3 flex gap-2  overflow-x-auto  ">
 
-                        <div id="ArijitSingh" class="playlist card ArijitSingh hover:bg-[#1e1d1d] ease-linear duration-100 min-w-[160px] rounded-lg p-3 cursor-pointer ">
-                            <div class="imageBox relative  mb-2">
-                                <div
-                                    class="play bg-green-500 w-fit rounded-full p-3 absolute top-[100px] right-3 opacity-0">
-                                    <img src="svg/play.svg" alt="">
-                                </div>
-
-                                <img src="https://i.scdn.co/image/ab676161000051745ba2d75eb08a2d672f9b69b7" alt=""
-                                    class="rounded-full w-[145px] h-[145px] object-cover">
-                            </div>
-                            <div class="name text-base font-bold hover:underline text-center">
-                                Arijit Singh
-                            </div>
-                        </div>
-                    </div>
+                    </ul>
                 </div>
 
 
@@ -127,7 +99,7 @@
         </div>
     </div>
 
-    <div class="playBar bg-black fixed bottom-0  w-full flex justify-between py-5  px-3 items-center">
+    <div class="playBar bg-black fixed bottom-0  w-full flex justify-between py-2  px-3 items-center">
         <div class="playBarLeft flex items-center gap-2 ">
             <div class="waves p-2  gap-1 h-[25px] flex items-end">
                 <div class="wave wave1 h-[13px] w-[2px] bg-yellow-400"></div>
@@ -137,7 +109,7 @@
 
             <div class="w-[70px] h-[70px]">
 
-                <img src="songsThumbnail/LibSongsThumnail/Beast Mode - The Soundings.jpg" alt=""
+                <img src="songs Thumbnail/LibraryThumbnail/Beast Mode - The Soundings.jpg" alt=""
                     class="playBarLeftSongPhoto rounded-md object-cover">
             </div>
 
