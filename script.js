@@ -376,19 +376,19 @@ function playPlaylistSongs() {
             if (!e.target.closest('li')) return;
 
             if (audio) {
-                if (e.target.closest('li').id == playedSongInAllSongDetails) {
+                if (e.target.closest('li').id == playedSongId) {
                     return
 
                 }
             }
 
-            playedSongId = e.target.id
             playedPlaylist = playlist.id
+            playedSongId = e.target.closest('li').id
             playedPlaylistAllSongsInDOM = Array.from(playlist.children)
-            playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.filter((song) => song.id == playedSongId)
-            // playedSongIndexInAllSongDetails = allsongDetails.findIndex((song) => song.id == playedSongInAllSongDetails)
-
+            playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId)
+        
             console.log(playedPlaylist);
+            console.log(playedSongId);
             console.log(playedPlaylistAllSongsInDOM);
             console.log(playedSongInAllSongDetails);
 
@@ -405,77 +405,75 @@ function playPlaylistSongs() {
                 }
             }
 
-            playSong = function () {
-                playedPlaylistAllSongsInDOM.forEach((e) => {
-                    e.querySelector('.playPause').src = "svg/play.svg"
-                    e.querySelector('.songName').style.color = "white"
-                })
+            // playSong = function () {
+            //     playedPlaylistAllSongsInDOM.forEach((e) => {
+            //         e.querySelector('.playPause').src = "svg/play.svg"
+            //         e.querySelector('.songName').style.color = "white"
+            //     })
 
-                // playedSongIndexInAllSongDetails = allsongDetails.find((song) => song.id == playedSongInAllSongDetails)
+            //     // playedSongIndexInAllSongDetails = allsongDetails.find((song) => song.id == playedSongInAllSongDetails)
 
-                allsongDetails.forEach((e) => {
-                    e.currentState = false
-                })
+            //     allsongDetails.forEach((e) => {
+            //         e.currentState = false
+            //     })
 
 
-                allsongDetails[playedSongIndexInAllSongDetails].currentState = true
-                console.log(playedSongIndexInAllSongDetails);
+            //     allsongDetails[playedSongIndexInAllSongDetails].currentState = true
+            //     console.log(playedSongIndexInAllSongDetails);
 
-                if (audio) {
-                    audio.pause()
-                    audio.currentTime = 0
-                }
+            //     if (audio) {
+            //         audio.pause()
+            //         audio.currentTime = 0
+            //     }
 
-                audio = new Audio(allsongDetails(playedSongIndexInAllSongDetails).songLink)
-                audio.play()
+            //     audio = new Audio(allsongDetails(playedSongIndexInAllSongDetails).songLink)
+            //     audio.play()
 
-                songInPlaylistPlayedInDOM = e.target.closest('li')
+            //     songInPlaylistPlayedInDOM = e.target.closest('li')
 
-                songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
-                songInPlaylistPlayedInDOM.querySelector('.songName').style.color = "yellow"
-                seekbarPlayPause.src = "svg/pause.svg"
+            //     songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
+            //     songInPlaylistPlayedInDOM.querySelector('.songName').style.color = "yellow"
+            //     seekbarPlayPause.src = "svg/pause.svg"
 
-                songInPlaylistPlayedInDOM.querySelector('.playPause').removeEventListener('click', playPauseHandler)
+            //     songInPlaylistPlayedInDOM.querySelector('.playPause').removeEventListener('click', playPauseHandler)
 
-                songInPlaylistPlayedInDOM.querySelector('.playPause').addEventListener('click', playPauseHandler)
+            //     songInPlaylistPlayedInDOM.querySelector('.playPause').addEventListener('click', playPauseHandler)
 
-                audio.addEventListener('loadedmetadata', () => {
-                    document.querySelector('.duration').innerHTML = convertInFormat(audio.duration);
-                });
+            //     audio.addEventListener('loadedmetadata', () => {
+            //         document.querySelector('.duration').innerHTML = convertInFormat(audio.duration);
+            //     });
 
-                audio.addEventListener('timeupdate', () => {
-                    document.querySelector('.currentTime').innerHTML = convertInFormat(audio.currentTime)
-                    seekBarCircle.style.left = (audio.currentTime / audio.duration) * 100 + "%"
-                })
+            //     audio.addEventListener('timeupdate', () => {
+            //         document.querySelector('.currentTime').innerHTML = convertInFormat(audio.currentTime)
+            //         seekBarCircle.style.left = (audio.currentTime / audio.duration) * 100 + "%"
+            //     })
 
-                audio.addEventListener('play', () => {
-                    document.querySelectorAll('.wave').forEach((e) => {
-                        e.classList.add('active')
-                    })
-                })
-                audio.addEventListener('pause', () => {
-                    document.querySelectorAll('.wave').forEach((e) => {
-                        e.classList.remove('active')
-                    })
-                })
+            //     audio.addEventListener('play', () => {
+            //         document.querySelectorAll('.wave').forEach((e) => {
+            //             e.classList.add('active')
+            //         })
+            //     })
+            //     audio.addEventListener('pause', () => {
+            //         document.querySelectorAll('.wave').forEach((e) => {
+            //             e.classList.remove('active')
+            //         })
+            //     })
 
-                // change seekbar details
-                document.querySelector('.playBarLeftSongPhoto').src = playedSongIndexInAllSongDetails.libSongThumnail
-                document.querySelector('.playBArLeftSongName').innerHTML = playedSongIndexInAllSongDetails.name
-                document.querySelector('.playBArLeftSongArtist').innerHTML = playedSongIndexInAllSongDetails.Artist
+            //     // change seekbar details
+            //     document.querySelector('.playBarLeftSongPhoto').src = playedSongIndexInAllSongDetails.libSongThumnail
+            //     document.querySelector('.playBArLeftSongName').innerHTML = playedSongIndexInAllSongDetails.name
+            //     document.querySelector('.playBArLeftSongArtist').innerHTML = playedSongIndexInAllSongDetails.Artist
 
-                audio.addEventListener('timeupdate', () => {
-                    if (audio.duration === audio.currentTime) {
-                        playNextSong()
-                    }
-                })
-            }
+            //     audio.addEventListener('timeupdate', () => {
+            //         if (audio.duration === audio.currentTime) {
+            //             playNextSong()
+            //         }
+            //     })
+            // }
 
-            playSong()
+            // playSong()
         })
 
 
     })
-
-
 }
