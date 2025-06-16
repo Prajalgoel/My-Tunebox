@@ -311,8 +311,8 @@ function renderSongs() {
         li.innerHTML = `
         <span class="font-bold text-lg">${index}</span>
     
-        <div class="songPhoto w-[50px]">
-           <img src="${e.songThumnail}" alt="" width="50px" class="rounded-md object-cover">
+        <div class="songPhoto w-[50px] h-[50px]">
+           <img src="${e.songThumnail}" alt="" width="50px" class="rounded-md object-cover w-full h-full">
          </div>
     
         <div class="songDetails">
@@ -341,7 +341,7 @@ function renderSongs() {
                                 </div>
 
                                 <img src="${e.songThumnail}" alt=""
-                                    class="rounded-full w-[145px] h-[145px] object-cover">
+                                    class="rounded-full w-[145px] h-[145px] ">
                             </div>
                             <div class="songName text-base font-normal hover:underline text-center">
                                 ${e.name}
