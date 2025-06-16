@@ -462,8 +462,8 @@ function playPlaylistSongs() {
 
                 seekbarPlayPause.src = "svg/pause.svg"
 
-                songInPlaylistPlayedInDOM.removeEventListener('click', playPauseHandler)
-                songInPlaylistPlayedInDOM.addEventListener('click', playPauseHandler)
+                songInPlaylistPlayedInDOM.querySelector('.playPause').removeEventListener('click', playPauseHandler)
+                songInPlaylistPlayedInDOM.querySelector('.playPause').addEventListener('click', playPauseHandler)
 
                 audio.addEventListener('loadedmetadata', () => {
                     document.querySelector('.duration').innerHTML = convertInFormat(audio.duration);
