@@ -12,8 +12,22 @@
     }
 }
 
-.card:hover .playBox {
-    animation: playAnimation 0.2s linear forwards;
+/* Base: playBox hidden */
+.playBox {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Hover only on cards that are NOT playing */
+.card:not(.playing):hover .playBox {
+  animation: playAnimation 0.2s linear forwards;
+  opacity: 1;
+}
+
+/* When a card has .playing, always show its playBox and kill animations */
+.card.playing .playBox {
+  animation: none !important;
+  opacity: 1 !important;
 }
 
 /* Custom Dark Scrollbar */

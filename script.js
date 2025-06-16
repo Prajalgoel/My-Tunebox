@@ -430,19 +430,21 @@ function playPlaylistSongs() {
                     btn.style.color = "white"
                 })
 
-                document.querySelectorAll('.playBox').forEach((btn) => {
-                    btn.style.opacity = "0"
-                })
-
-                document.querySelectorAll('.card:hover .playBox').forEach((btn) => {
-                    btn.style.animation = "playAnimation 0.2s linear forwards"
-                })
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.remove('playing');
+                });
 
                 for (const key in allsongDetails) {
                     allsongDetails[key].songs.forEach((song) => {
                         song.state = false
                     })
                 }
+
+                songInPlaylistPlayedInDOM.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center'
+                });
 
                 if (audio) {
                     audio.pause()
@@ -456,12 +458,11 @@ function playPlaylistSongs() {
 
                 songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
                 songInPlaylistPlayedInDOM.querySelector('.songName').style.color = "yellow"
-                songInPlaylistPlayedInDOM.querySelector('.playBox').style.opacity = "1"
-                songInPlaylistPlayedInDOM.querySelector('.card:hover .playBox').style.animation = "none"
+                songInPlaylistPlayedInDOM.classList.add('playing');
+
                 seekbarPlayPause.src = "svg/pause.svg"
 
                 songInPlaylistPlayedInDOM.removeEventListener('click', playPauseHandler)
-
                 songInPlaylistPlayedInDOM.addEventListener('click', playPauseHandler)
 
                 audio.addEventListener('loadedmetadata', () => {

@@ -69,7 +69,7 @@
 
                     </div>
 
-                    <ul id="PopularSongs" class="playlist p-1 pl-3 flex gap-2  overflow-x-auto  ">
+                    <ul id="PopularSongs" class="containSongs playlist p-1 pl-3 flex gap-2  overflow-x-auto  ">
 
                     </ul>
                 </div>
@@ -99,8 +99,8 @@
         </div>
     </div>
 
-    <div class="playBar bg-black fixed bottom-0  w-full flex justify-between py-2  px-3 items-center">
-        <div class="playBarLeft flex items-center gap-2 ">
+    <div class="playBar bg-black fixed bottom-0  w-full flex justify-between py-2  px-3 gap-5 items-center">
+        <div class="playBarLeft flex items-center gap-2 w-[30vw]">
             <div class="waves p-2  gap-1 h-[25px] flex items-end">
                 <div class="wave wave1 h-[13px] w-[2px] bg-yellow-400"></div>
                 <div class="wave wave2 h-[20px] w-[3px] bg-yellow-400 "></div>
@@ -128,7 +128,7 @@
             </div>
         </div>
 
-        <div class="playBarCentre w-[40vw] flex flex-col items-center gap-2">
+        <div class="playBarCentre w-[60vw] flex flex-col items-center gap-2">
             <div class="playButtons flex gap-6">
                 <img src="svg/previous.svg" alt="" class=" cursor-pointer " id="previous">
                 <img src="svg/play.svg" alt="" class="p-1 bg-white rounded-full cursor-pointer " id="seekbarPlayPause">
@@ -147,7 +147,7 @@
             </div>
         </div>
 
-        <div class="playBarRight mr-4 w-[10vw]">
+        <div class="playBarRight mr-4 ml-10 w-[10vw]">
             <div class="volumnColumn flex w-full items-center gap-2">
 
                 <img src="svg/volumn.svg" width="30px" alt="" class="volumeBtn cursor-pointer">
