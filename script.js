@@ -237,7 +237,7 @@ document.querySelector('#previous').addEventListener('click', (e) => {
 document.querySelectorAll('.shuffle').forEach((shuffle) => {
     shuffle.addEventListener('click', (e) => {
         if (!shuffle.style.backgroundColor) {
-            
+
             document.querySelectorAll('.shuffle').forEach((shuffle) => {
                 shuffle.style.backgroundColor = ""
             })
@@ -287,6 +287,48 @@ document.querySelectorAll('.shuffle').forEach((shuffle) => {
 
                         }
                     })
+                })
+            }
+            else {
+                let randomIndexArray = []
+                let playedPlaylistLength = shuffle.parentNode.parentNode.parentNode.lastElementChild.children.length - 1
+                let randomIndex = Math.floor(Math.random() * (playedPlaylistLength - 0 + 1)) + 0
+                randomIndexArray.push(randomIndex)
+
+                console.log(randomIndex);
+
+                playedPlaylist = shuffle.parentNode.parentNode.parentNode.lastElementChild.id
+                playedSongId = Array.from(shuffle.parentNode.parentNode.parentNode.lastElementChild.children)[randomIndex].id
+
+                playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId)
+                songInPlaylistPlayedInDOM = Array.from(shuffle.parentNode.parentNode.parentNode.lastElementChild.children)[randomIndex]
+                playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
+                playSong()
+
+                audio.addEventListener('timeupdate', () => {
+                    if (audio.duration === audio.currentTime && document.querySelector('#loop').src.endsWith("svg/loop.svg")) {
+                        let randomIndex = Math.floor(Math.random() * (playedPlaylistLength - 0 + 1)) + 0
+                        while (randomIndexArray.includes(randomIndex)) {
+                            randomIndex = Math.floor(Math.random() * (playedPlaylistLength - 0 + 1)) + 0
+                        }
+                        console.log(randomIndex);
+
+
+                        document.querySelectorAll('.playPause').forEach((btn) => {
+                            btn.src = "svg/play.svg"
+                        })
+
+                        document.querySelectorAll('.songName').forEach((btn) => {
+                            btn.style.color = "white"
+                        })
+
+                        playedSongId = Array.from(shuffle.parentNode.parentNode.parentNode.lastElementChild.children)[randomIndex].id
+                        playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId)
+                        songInPlaylistPlayedInDOM = Array.from(shuffle.parentNode.parentNode.parentNode.lastElementChild.children)[randomIndex]
+                        playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
+                        playSong()
+
+                    }
                 })
             }
 
