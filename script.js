@@ -594,6 +594,10 @@ function playPlaylistSongs() {
                 }
             }
 
+            document.querySelectorAll(".shuffle").forEach((shuffle) => {
+                shuffle.style.backgroundColor = ""
+            })
+
             playedPlaylist = playlist.id
             playedSongId = e.target.closest('li').id
             playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId)
