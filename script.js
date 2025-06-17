@@ -8,7 +8,88 @@ let songInPlaylistPlayedInDOM
 
 let audio = null
 
-let playSong = function () { }
+let playSong = function () {
+    document.querySelectorAll('.playPause').forEach((btn) => {
+        btn.src = "svg/play.svg"
+    })
+
+    document.querySelectorAll('.songName').forEach((btn) => {
+        btn.style.color = "white"
+    })
+
+    document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('playing');
+    });
+
+    for (const key in allsongDetails) {
+        allsongDetails[key].songs.forEach((song) => {
+            song.state = false
+        })
+    }
+
+    songInPlaylistPlayedInDOM.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center'
+    });
+
+    if (audio) {
+        audio.pause()
+        audio.currentTime = 0
+    }
+
+    playedSongInAllSongDetails.state = true
+
+    audio = new Audio(playedSongLink)
+    audio.play()
+
+    songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
+    songInPlaylistPlayedInDOM.querySelector('.songName').style.color = "yellow"
+    songInPlaylistPlayedInDOM.classList.add('playing');
+
+    seekbarPlayPause.src = "svg/pause.svg"
+
+    songInPlaylistPlayedInDOM.querySelector('.playPause').removeEventListener('click', playPauseHandler)
+    songInPlaylistPlayedInDOM.querySelector('.playPause').addEventListener('click', playPauseHandler)
+
+    audio.addEventListener('loadedmetadata', () => {
+        document.querySelector('.duration').innerHTML = convertInFormat(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+        document.querySelector('.currentTime').innerHTML = convertInFormat(audio.currentTime)
+        seekBarCircle.style.left = (audio.currentTime / audio.duration) * 100 + "%"
+    })
+
+    audio.addEventListener('play', () => {
+        document.querySelectorAll('.wave').forEach((e) => {
+            e.classList.add('active')
+        })
+    })
+    audio.addEventListener('pause', () => {
+        document.querySelectorAll('.wave').forEach((e) => {
+            e.classList.remove('active')
+        })
+    })
+
+    // change seekbar details
+    document.querySelector('.playBarLeftSongPhoto').src = playedSongInAllSongDetails.songThumnail
+    document.querySelector('.playBArLeftSongName').innerHTML = playedSongInAllSongDetails.name
+    document.querySelector('.playBArLeftSongArtist').innerHTML = playedSongInAllSongDetails.artist
+}
+
+let playPauseHandler = (e) => {
+    if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
+        audio.pause()
+        songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/play.svg"
+        seekbarPlayPause.src = "svg/play.svg"
+    }
+    else {
+        audio.play()
+        songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
+        seekbarPlayPause.src = "svg/pause.svg"
+    }
+}
 
 document.querySelector(".popularSongsHeadingLeftArrow").addEventListener('click', () => {
     document.querySelector("#PopularSongs").scrollLeft -= 300
@@ -125,6 +206,10 @@ let playNextSong = function () {
         songInPlaylistPlayedInDOM = songInPlaylistPlayedInDOM.nextElementSibling
         playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
         playSong()
+
+        audio.addEventListener('ended', () => {
+            playNextSong()
+        })
     }
 }
 
@@ -147,6 +232,76 @@ document.querySelector('#previous').addEventListener('click', (e) => {
         playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
         playSong()
     }
+})
+
+document.querySelectorAll('.shuffle').forEach((shuffle) => {
+    shuffle.addEventListener('click', (e) => {
+        if (!shuffle.style.backgroundColor) {
+            
+            document.querySelectorAll('.shuffle').forEach((shuffle) => {
+                shuffle.style.backgroundColor = ""
+            })
+
+            shuffle.style.backgroundColor = "yellow"
+            e.stopPropagation()
+
+            if (playedPlaylist == shuffle.parentNode.parentNode.parentNode.lastElementChild.id) {
+                audio.addEventListener('ended', () => {
+                    let randomIndexArray = []
+                    let playedPlaylistLength = shuffle.parentNode.parentNode.parentNode.lastElementChild.children.length - 1
+                    let randomIndex = Math.floor(Math.random() * (playedPlaylistLength - 0 + 1)) + 0
+                    randomIndexArray.push(randomIndex)
+
+                    console.log(randomIndex);
+
+                    playedPlaylist = shuffle.parentNode.parentNode.parentNode.lastElementChild.id
+                    playedSongId = Array.from(shuffle.parentNode.parentNode.parentNode.lastElementChild.children)[randomIndex].id
+
+                    playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId)
+                    songInPlaylistPlayedInDOM = Array.from(shuffle.parentNode.parentNode.parentNode.lastElementChild.children)[randomIndex]
+                    playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
+                    playSong()
+
+                    audio.addEventListener('timeupdate', () => {
+                        if (audio.duration === audio.currentTime && document.querySelector('#loop').src.endsWith("svg/loop.svg")) {
+                            let randomIndex = Math.floor(Math.random() * (playedPlaylistLength - 0 + 1)) + 0
+                            while (randomIndexArray.includes(randomIndex)) {
+                                randomIndex = Math.floor(Math.random() * (playedPlaylistLength - 0 + 1)) + 0
+                            }
+                            console.log(randomIndex);
+
+
+                            document.querySelectorAll('.playPause').forEach((btn) => {
+                                btn.src = "svg/play.svg"
+                            })
+
+                            document.querySelectorAll('.songName').forEach((btn) => {
+                                btn.style.color = "white"
+                            })
+
+                            playedSongId = Array.from(shuffle.parentNode.parentNode.parentNode.lastElementChild.children)[randomIndex].id
+                            playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId)
+                            songInPlaylistPlayedInDOM = Array.from(shuffle.parentNode.parentNode.parentNode.lastElementChild.children)[randomIndex]
+                            playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
+                            playSong()
+
+                        }
+                    })
+                })
+            }
+
+
+        }
+
+        else {
+            shuffle.style.backgroundColor = ""
+            e.stopPropagation()
+            audio.addEventListener('ended', () => {
+                playNextSong()
+            })
+        }
+
+    })
 })
 
 document.querySelector('.lib-heading').addEventListener('click', (e) => {
@@ -372,7 +527,7 @@ function renderSongs() {
                             <div class="name text-base font-normal text-center hover:underline ">
                                 ${key}
                             </div>
-                            <div class="name text-sm font-normal text-center hover:underline ">
+                            <div class="noOfAlbumSongs text-sm font-normal text-center hover:underline ">
                                 ${allsongDetails[key].songs.length} songs
                             </div>
                             `
@@ -408,98 +563,12 @@ function playPlaylistSongs() {
             console.log(playedSongInAllSongDetails);
             console.log(songInPlaylistPlayedInDOM);
 
-            let playPauseHandler = (e) => {
-                if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
-                    audio.pause()
-                    songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/play.svg"
-                    seekbarPlayPause.src = "svg/play.svg"
-                }
-                else {
-                    audio.play()
-                    songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
-                    seekbarPlayPause.src = "svg/pause.svg"
-                }
-            }
-
-            playSong = function () {
-                document.querySelectorAll('.playPause').forEach((btn) => {
-                    btn.src = "svg/play.svg"
-                })
-
-                document.querySelectorAll('.songName').forEach((btn) => {
-                    btn.style.color = "white"
-                })
-
-                document.querySelectorAll('.card').forEach(card => {
-                    card.classList.remove('playing');
-                });
-
-                for (const key in allsongDetails) {
-                    allsongDetails[key].songs.forEach((song) => {
-                        song.state = false
-                    })
-                }
-
-                songInPlaylistPlayedInDOM.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                    inline: 'center'
-                });
-
-                if (audio) {
-                    audio.pause()
-                    audio.currentTime = 0
-                }
-
-                playedSongInAllSongDetails.state = true
-
-                audio = new Audio(playedSongLink)
-                audio.play()
-
-                songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
-                songInPlaylistPlayedInDOM.querySelector('.songName').style.color = "yellow"
-                songInPlaylistPlayedInDOM.classList.add('playing');
-
-                seekbarPlayPause.src = "svg/pause.svg"
-
-                songInPlaylistPlayedInDOM.querySelector('.playPause').removeEventListener('click', playPauseHandler)
-                songInPlaylistPlayedInDOM.querySelector('.playPause').addEventListener('click', playPauseHandler)
-
-                audio.addEventListener('loadedmetadata', () => {
-                    document.querySelector('.duration').innerHTML = convertInFormat(audio.duration);
-                });
-
-                audio.addEventListener('timeupdate', () => {
-                    document.querySelector('.currentTime').innerHTML = convertInFormat(audio.currentTime)
-                    seekBarCircle.style.left = (audio.currentTime / audio.duration) * 100 + "%"
-                })
-
-                audio.addEventListener('play', () => {
-                    document.querySelectorAll('.wave').forEach((e) => {
-                        e.classList.add('active')
-                    })
-                })
-                audio.addEventListener('pause', () => {
-                    document.querySelectorAll('.wave').forEach((e) => {
-                        e.classList.remove('active')
-                    })
-                })
-
-                // change seekbar details
-                document.querySelector('.playBarLeftSongPhoto').src = playedSongInAllSongDetails.songThumnail
-                document.querySelector('.playBArLeftSongName').innerHTML = playedSongInAllSongDetails.name
-                document.querySelector('.playBArLeftSongArtist').innerHTML = playedSongInAllSongDetails.artist
-
-                audio.addEventListener('timeupdate', () => {
-                    if (audio.duration === audio.currentTime && document.querySelector('#loop').src.endsWith("svg/loop.svg")) {
-                        playNextSong()
-                    }
-                })
-            }
-
             playSong()
+
+            audio.addEventListener('ended', () => {
+                playNextSong()
+            })
+
         })
-
-
     })
 }

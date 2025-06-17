@@ -20,24 +20,82 @@
             </div>
 
             <div class="sidebarPlaylists overflow-y-auto max-h-[80vh]">
-                <div class="library flex flex-col h-fit bg-[#2a1f1f] rounded-md ">
-                    <div class="lib-heading flex gap-6 items-center w-full  p-3  cursor-pointer">
+                <div id="LibrarySongsContainer" class="library flex flex-col h-fit bg-[#2a1f1f] rounded-md ">
+                    <div class="lib-heading flex gap-3 items-center w-full  p-3  cursor-pointer">
                         <img src="svg/library.svg" alt="" class="">
                         <div class="font-semibold text-lg text-white ease-in-out duration-100">
                             Library</div>
+                        <div class="NoOfLibSongs"></div>
                         <div class="ml-auto flex items-center gap-4">
-                            <div class="NoOfLibSongs"></div>
+                            <img src="svg/shuffle.svg"
+                                class="shuffle rounded-full p-2 hover:bg-red-500 transition-all" alt="">
                             <img src="svg/upArrow.svg" width="30px" class="libPlaylistHeadingArrowBtn ml-auto">
                         </div>
                     </div>
 
-                    <ul id="LibrarySongs" class="playlist flex flex-col gap-3 px-3 mt-3 overflow-y-auto library-expanded">
+                    <ul id="LibrarySongs"
+                        class="playlist flex flex-col gap-3 px-3 mt-3 overflow-y-auto library-expanded">
 
                     </ul>
 
                 </div>
 
-                
+                <div id="Arijit SinghContainer" class="flex flex-col h-fit bg-[#2a1f1f] rounded-md ">
+                    <div class="lib-heading flex gap-3 items-center w-full  p-3  cursor-pointer">
+                        <img src="svg/library.svg" alt="" class="">
+                        <div class="font-semibold text-lg text-white ease-in-out duration-100">
+                            Library</div>
+                        <div class="NoOfAlbumSongs">hdhddfh</div>
+                        <div class="ml-auto flex items-center gap-4">
+                            <img src="svg/shuffle.svg" 
+                                class="shuffle rounded-full p-2 hover:bg-red-500 transition-all" alt="">
+                            <img src="svg/cross.svg" alt="">
+                            <img src="svg/upArrow.svg" width="30px" class="libPlaylistHeadingArrowBtn ml-auto">
+                        </div>
+                    </div>
+
+                    <ul id="Arijit Singh"
+                        class="playlist flex flex-col gap-3 px-3 mt-3 overflow-y-auto library-expanded mb-3">
+                        <li
+                            class="librarySong song flex items-center gap-3 cursor-pointer hover:scale-105 hover:ease-in hover:duration-100 pb-2">
+                            <span class="font-bold text-lg">1</span>
+
+                            <div class="songPhoto w-[50px] h-[50px]">
+                                <img src="songs Thumbnail/LibraryThumbnail/Beast Mode - The Soundings.jpg" alt=""
+                                    width="50px" class="rounded-md object-cover w-full h-full">
+                            </div>
+
+                            <div class="songDetails">
+                                <div class="songName font-bold text-lg">hkhk</div>
+                                <div class="songArtist">jhkhk</div>
+                            </div>
+
+                            <img src="svg/play.svg" alt=""
+                                class="playPause p-2 bg-white rounded-full play ml-auto pr-2 ">
+                        </li>
+                        <li
+                            class="librarySong song flex items-center gap-3 cursor-pointer hover:scale-105 hover:ease-in hover:duration-100 pb-2">
+                            <span class="font-bold text-lg">1</span>
+
+                            <div class="songPhoto w-[50px] h-[50px]">
+                                <img src="songs Thumbnail/LibraryThumbnail/Beast Mode - The Soundings.jpg" alt=""
+                                    width="50px" class="rounded-md object-cover w-full h-full">
+                            </div>
+
+                            <div class="songDetails">
+                                <div class="songName font-bold text-lg">hkhk</div>
+                                <div class="songArtist">jhkhk</div>
+                            </div>
+
+                            <img src="svg/play.svg" alt=""
+                                class="playPause p-2 bg-white rounded-full play ml-auto pr-2 ">
+                        
+                        
+                    </ul>
+
+                </div>
+
+
             </div>
 
 
@@ -52,11 +110,16 @@
 
             </div>
 
-            <div class="playlists  bg-[#131212] mt-3 p-2 rounded-md max-h-[90vh]">
+            <div class="playlists bg-[#131212] mt-3 p-2 rounded-md max-h-[90vh]">
 
                 <div class="popularSongs flex flex-col gap-2 ">
                     <div class="popularSongsHeading flex justify-between px-2">
-                        <h1 class="text-[24px] font-bold hover:underline cursor-pointer ml-2">Popular Songs</h1>
+                        <div class="flex gap-3">
+                            <h1 class="text-[24px] font-bold hover:underline cursor-pointer ml-2">Popular Songs</h1>
+                            <img src="svg/shuffle.svg" 
+                                class="shuffle rounded-full p-2 hover:bg-red-500 transition-all cursor-pointer" alt="">
+                        </div>
+
                         <div class="popularSongsHeadingArrowBtns flex gap-2">
 
                             <img src="svg/left.svg" alt=""
@@ -123,14 +186,15 @@
                 </div>
             </div>
 
-            <div class="addToPlaylist border-2 border-white rounded-full p-1 ml-3 cursor-pointer">
-                <img src="svg/plus.svg" alt="" width="20px">
-            </div>
         </div>
 
         <div class="playBarCentre w-[60vw] flex flex-col items-center gap-2">
             <div class="playButtons flex gap-6">
-                <img src="svg/previous.svg" alt="" class=" cursor-pointer " id="previous">
+                <img src="svg/shuffle.svg"
+                    class="playbarShuffle rounded-full p-2 hover:bg-red-500 transition-all cursor-pointer"  alt="">
+                <img src="svg/plus.svg" alt="" width="35px"
+                    class="addToPlaylist border-2 border-white rounded-full p-1  cursor-pointer">
+                <img src="svg/previous.svg" alt="" class=" cursor-pointer" id="previous">
                 <img src="svg/play.svg" alt="" class="p-1 bg-white rounded-full cursor-pointer " id="seekbarPlayPause">
                 <img src="svg/next.svg" alt="" class=" cursor-pointer " id="next">
                 <img src="svg/loop.svg" alt="" class=" cursor-pointer " id="loop">
@@ -150,7 +214,7 @@
         <div class="playBarRight mr-4 ml-10 w-[10vw]">
             <div class="volumnColumn flex w-full items-center gap-2">
 
-                <img src="svg/volumn.svg" width="30px" alt="" class="volumeBtn cursor-pointer">
+                <img src="svg/volumn.svg" width="30px" height="30px" alt="" class="volumeBtn cursor-pointer">
                 <div class="volumeSeekbarColumn w-[90%] relative">
                     <div class="volumnSeekbar  w-full bg-white p-[2px] cursor-pointer"></div>
                     <div
@@ -161,6 +225,6 @@
         </div>
     </div>
 </body>
-<script  src="script.js"></script>
+<script src="script.js"></script>
 
 </html>
