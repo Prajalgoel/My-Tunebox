@@ -109,7 +109,7 @@
   
   /* Expanded state */
   .library-expanded {
-    max-height: 40vh; /* adjust based on your content */
+    max-height: 65vh; /* adjust based on your content */
     opacity: 1;
     transition: max-height 0.5s ease, opacity 0.5s ease;
   }
