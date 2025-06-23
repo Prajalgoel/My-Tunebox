@@ -48,14 +48,9 @@
 
 
         <div class="right col-span-8 ml-0 px-2 py-0 relative">
-            <div class="header flex items-center justify-center px-2 sticky top-2 ">
-                <input type="text"
-                    class="search w-[70%] rounded-lg p-2 text-black placeholder:text-black outline-none bg-white z-50"
-                    placeholder="Search Your favourite songs or Artists">
+            
 
-            </div>
-
-            <div class="playlists bg-[#131212] mt-3 p-2 rounded-md max-h-[90vh]">
+            <div class="playlists bg-[#131212] mt-12 p-2 rounded-md max-h-[90vh] overflow-auto">
 
                 <div class="PopularSongsContainer flex flex-col ">
                     <div class="popularSongsHeading flex justify-between px-2">
@@ -135,10 +130,10 @@
 
         <div class="playBarCentre w-[60vw] flex flex-col items-center gap-2">
             <div class="playButtons flex gap-4 items-center">
+                <img src="" alt="" width="35px"
+                    class="addToPlaylist border-2 border-white rounded-full p-1  cursor-pointer hidden transition-all">
                 <img src="svg/shuffle.svg"
                     class="playbarShuffle rounded-full p-2 hover:bg-red-500 transition-all cursor-pointer"  alt="">
-                <img src="svg/plus.svg" alt="" width="35px"
-                    class="addToPlaylist border-2 border-white rounded-full p-1  cursor-pointer">
                 <img src="svg/previous.svg" alt="" class=" cursor-pointer" id="previous">
                 <img src="svg/play.svg" alt="" class="w-[40px] h-[40px] p-1 bg-white rounded-full cursor-pointer " id="seekbarPlayPause">
                 <img src="svg/next.svg" alt="" class=" cursor-pointer " id="next">

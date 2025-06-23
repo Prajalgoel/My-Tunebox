@@ -10,6 +10,38 @@ let albumContainers = []
 
 let audio = null
 
+let renderLibSongs = function () {
+    document.querySelector('#LibrarySongs').innerHTML = '';
+    let index = 1
+    let LibrarySongs = allsongDetails["LibrarySongs"].songs
+    console.table("LibrarySongs are", LibrarySongs);
+
+    document.querySelector('.NoOfLibSongs').innerHTML = `${allsongDetails.LibrarySongs.songs.length} songs`
+    LibrarySongs.forEach((e) => {
+        let li = document.createElement('li')
+        li.className = `librarySong song flex items-center gap-3 cursor-pointer hover:scale-105 hover:ease-in hover:duration-100 pb-2`
+        li.id = e.id
+
+        li.innerHTML = `
+            <span class="font-bold text-lg">${index}</span>
+        
+            <div class="songPhoto w-[50px] h-[50px]">
+               <img src="${e.songThumnail}" alt="" width="50px" class="rounded-md object-cover w-full h-full">
+             </div>
+        
+            <div class="songDetails">
+                <div class="songName font-bold text-lg">${e.name}</div>
+                <div class="songArtist">${e.artist}</div>
+            </div>
+        
+            <img src="svg/play.svg" alt="" class="playPause p-2 bg-white rounded-full play ml-auto pr-2 ">
+            `
+        index++
+
+        document.querySelector('#LibrarySongs').appendChild(li)
+    })
+}
+
 let playPauseHandler = (e) => {
     if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
         audio.pause()
@@ -124,6 +156,81 @@ volumnSeekbar.addEventListener('click', (e) => {
     }
 })
 
+document.querySelector('.addToPlaylist').addEventListener('click', () => {
+    if (playedPlaylist !== "LibrarySongs") {
+        if (document.querySelector('.addToPlaylist').src.endsWith("svg/tick.svg")) {
+            playedSongInAllSongDetails.added = false
+            allsongDetails.LibrarySongs.songs = allsongDetails.LibrarySongs.songs.filter((song) => song.id != playedSongId)
+            document.querySelector('.addToPlaylist').style.backgroundColor = ""
+            document.querySelector('.addToPlaylist').src = "svg/plus.svg"
+            renderLibSongs()
+        } else {
+            playedSongInAllSongDetails.added = true
+            allsongDetails.LibrarySongs.songs.push(playedSongInAllSongDetails)
+            document.querySelector('.addToPlaylist').style.backgroundColor = "yellow"
+            document.querySelector('.addToPlaylist').src = "svg/tick.svg"
+            renderLibSongs()
+            if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
+                document.querySelector('#LibrarySongs').lastElementChild.querySelector('.playPause').src = "svg/pause.svg"
+            } else {
+                document.querySelector('#LibrarySongs').lastElementChild.querySelector('.playPause').src = "svg/play.svg"
+            }
+            songInPlaylistPlayedInDOM.querySelector('.playPause').addEventListener('click', () => {
+                if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
+                    document.querySelector('#LibrarySongs').lastElementChild.querySelector('.playPause').src = "svg/pause.svg"
+                } else {
+                    document.querySelector('#LibrarySongs').lastElementChild.querySelector('.playPause').src = "svg/play.svg"
+                }
+
+            })
+        }
+
+    }
+    else {
+        let remainingSongs = []
+        let ifSongInOtherPlaylist
+        if (document.querySelector('.addToPlaylist').src.endsWith("svg/tick.svg")) {
+            playedSongInAllSongDetails.added = false
+            allsongDetails.LibrarySongs.songs = allsongDetails.LibrarySongs.songs.filter((song) => song.id != playedSongId)
+            document.querySelector('.addToPlaylist').style.backgroundColor = ""
+            document.querySelector('.addToPlaylist').src = "svg/plus.svg"
+            songInPlaylistPlayedInDOM.style.display = "none"
+
+            // storing the song if it is not present in other playlists
+
+            for (const key in allsongDetails) {
+                if (key == "deletedSongs" && key == "LibrarySongs") {
+                    continue
+                }
+                allsongDetails[key].songs.forEach((song) => {
+                    remainingSongs.push(song)
+                })
+
+            }
+            ifSongInOtherPlaylist = remainingSongs.filter((song) => song == playedSongInAllSongDetails)
+            if (ifSongInOtherPlaylist.length == 0) {
+                allsongDetails["deletedSongs"].songs.push(playedSongInAllSongDetails)
+            }
+
+
+
+        } else {
+            playedSongInAllSongDetails.added = true
+            allsongDetails.LibrarySongs.songs.push(playedSongInAllSongDetails)
+            document.querySelector('.addToPlaylist').style.backgroundColor = "yellow"
+            document.querySelector('.addToPlaylist').src = "svg/tick.svg"
+            songInPlaylistPlayedInDOM.style.display = "flex"
+            allsongDetails["deletedSongs"].songs = allsongDetails["deletedSongs"].songs.filter((song) => song !== playedSongInAllSongDetails)
+        }
+    }
+
+
+    document.querySelector('.NoOfLibSongs').innerHTML = `${allsongDetails.LibrarySongs.songs.length} songs`
+})
+
+
+
+
 let playSong = function () {
     document.querySelectorAll('.playPause').forEach((btn) => {
         btn.src = "svg/play.svg"
@@ -158,6 +265,16 @@ let playSong = function () {
 
     audio = new Audio(playedSongLink)
     audio.play()
+
+    if (playedSongInAllSongDetails.added) {
+        document.querySelector('.addToPlaylist').style.display = "block"
+        document.querySelector('.addToPlaylist').src = "svg/tick.svg"
+        document.querySelector('.addToPlaylist').style.backgroundColor = "yellow"
+    } else {
+        document.querySelector('.addToPlaylist').style.backgroundColor = ""
+        document.querySelector('.addToPlaylist').src = "svg/plus.svg"
+        document.querySelector('.addToPlaylist').style.display = "block"
+    }
 
     songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
     songInPlaylistPlayedInDOM.querySelector('.songName').style.color = "yellow"
@@ -210,9 +327,29 @@ let playNextSong = function (randomIndex = null, randomIndexArray = null, played
             playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
             playSong()
 
+
+
             audio.addEventListener('ended', () => {
                 playNextSong()
             })
+        } else {
+            playedSongId = songInPlaylistPlayedInDOM.parentNode.firstElementChild.id
+            playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId)
+            songInPlaylistPlayedInDOM = songInPlaylistPlayedInDOM.parentNode.firstElementChild
+            playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
+
+
+            document.querySelector('.currentTime').innerHTML = "0:00"
+            seekBarCircle.style.left = "0%"
+            playSong()
+            audio.pause()
+            songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/play.svg"
+            seekbarPlayPause.src = "svg/play.svg"
+
+            audio.addEventListener('ended', () => {
+                playNextSong()
+            })
+
         }
     }
     else {
@@ -236,6 +373,8 @@ let playNextSong = function (randomIndex = null, randomIndexArray = null, played
             playedSongInAllSongDetails = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId)
             songInPlaylistPlayedInDOM = Array.from(songInPlaylistPlayedInDOM.parentNode.children)[randomIndex]
             playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
+
+
             playSong()
 
             audio.addEventListener('ended', () => {
@@ -387,6 +526,7 @@ async function getSongs() {
                         song.artist = element.innerHTML.split("-")[1].replace(".mp3", "").trim()
                         song.songLink = element.href
                         song.songThumnail = `http://127.0.0.1:3000/songs Thumbnail/LibraryThumbnail/${song.name} - ${song.artist}.jpg`
+                        song.added = true
                         song.state = false
                         songs.push(song)
                     }
@@ -417,6 +557,7 @@ async function getSongs() {
                         song.songLink = element.href
                         song.songThumnail = `http://127.0.0.1:3000/songs Thumbnail/Popular SongsThumbnail/${song.name} - ${song.artist}.jpg`
                         song.state = false
+                        song.added = false
                         songs.push(song)
                     }
                 }
@@ -445,6 +586,7 @@ async function getSongs() {
                         song.songLink = element.href
                         song.songThumnail = `http://127.0.0.1:3000/songs Thumbnail/${song.artist}Thumbnail/${song.name} - ${song.artist}.jpg`
                         song.state = false
+                        song.added = false
                         songs.push(song)
                     }
                 }
@@ -470,6 +612,9 @@ getSongs().then(() => {
         });
     }
 
+    allsongDetails["deletedSongs"] = {}
+    allsongDetails["deletedSongs"].songs = []
+
     console.log("allsongDetails are", allsongDetails)
     console.table(allsongDetails);
 
@@ -478,38 +623,12 @@ getSongs().then(() => {
 })
 
 function renderSongs() {
-    document.querySelector('#LibrarySongs').innerHTML = '';
     document.querySelector('#PopularSongs').innerHTML = '';
     document.querySelector('#popularArtistsCards').innerHTML = '';
+
+    renderLibSongs()
+
     let index = 1
-    let LibrarySongs = allsongDetails["LibrarySongs"].songs
-    console.table("LibrarySongs are", LibrarySongs);
-
-    document.querySelector('.NoOfLibSongs').innerHTML = `${allsongDetails.LibrarySongs.songs.length} songs`
-    LibrarySongs.forEach((e) => {
-        let li = document.createElement('li')
-        li.className = `librarySong song flex items-center gap-3 cursor-pointer hover:scale-105 hover:ease-in hover:duration-100 pb-2`
-        li.id = e.id
-
-        li.innerHTML = `
-        <span class="font-bold text-lg">${index}</span>
-    
-        <div class="songPhoto w-[50px] h-[50px]">
-           <img src="${e.songThumnail}" alt="" width="50px" class="rounded-md object-cover w-full h-full">
-         </div>
-    
-        <div class="songDetails">
-            <div class="songName font-bold text-lg">${e.name}</div>
-            <div class="songArtist">${e.artist}</div>
-        </div>
-    
-        <img src="svg/play.svg" alt="" class="playPause p-2 bg-white rounded-full play ml-auto pr-2 ">
-        `
-        index++
-
-        document.querySelector('#LibrarySongs').appendChild(li)
-    })
-
     let popularSongs = allsongDetails["PopularSongs"].songs
     console.table("popularSongs are", popularSongs);
     popularSongs.forEach((e) => {
@@ -538,7 +657,7 @@ function renderSongs() {
     })
 
     for (const key in allsongDetails) {
-        if (key != "LibrarySongs" && key != "PopularSongs") {
+        if (key != "LibrarySongs" && key != "PopularSongs" && key != "deletedSongs") {
             let li = document.createElement('li')
             li.id = key
             li.className = `card album hover:bg-[#1e1d1d] ease-linear duration-100 min-w-[160px] rounded-lg p-3 cursor-pointer `
