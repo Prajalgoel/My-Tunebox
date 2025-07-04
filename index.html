@@ -11,30 +11,30 @@
 </head>
 
 <body class="bg-black text-white relative ">
-    <div class="layout grid grid-cols-11 min-h-screen ">
-        <div class="left col-span-3 pl-4 pt-3 pr-3 flex flex-col relative ">
+    <div class="layout lg:grid lg:grid-cols-11 min-h-screen relative">
+        <div class="left lg:col-span-3 pl-4 pt-3 pr-3 lg:flex -left-full lg:left-0 flex-col lg:relative absolute transition-all z-10">
 
-            <div class="logo flex gap-2 items-center mb-4 sticky top-0">
+            <div class="logo flex gap-2 items-center mb-6 sticky top-0 invisible lg:visible">
                 <img src="musical-note.png" width="40px" class="bg-white p-2 rounded-full">
-                <div class="name text-xl font-bold">TuneBox</div>
+                <div class="name text-xl font-bold block ">TuneBox</div>
             </div>
 
-            <div class="sidebarPlaylists overflow-y-auto max-h-[80vh]">
+            <div class="sidebarPlaylists overflow-y-auto max-h-[80vh] ">
                 <div id="LibrarySongsContainer" class="library flex flex-col h-fit bg-[#2a1f1f] rounded-md ">
                     <div class="lib-heading flex gap-3 items-center w-full  p-3  cursor-pointer">
                         <img src="svg/library.svg" alt="" class="">
-                        <div class="font-semibold text-lg text-white ease-in-out duration-100">
+                        <div class="font-semibold xl:text-lg text-base text-white ease-in-out duration-100">
                             Library</div>
-                        <div class="NoOfLibSongs"></div>
-                        <div class="ml-auto flex items-center gap-4">
-                            <img src="svg/shuffle.svg"
-                                class="shuffle rounded-full p-2 hover:bg-red-500 transition-all" alt="">
+                        <div class="NoOfLibSongs hidden xl:block"></div>
+                        <div class="ml-auto flex items-center xl:gap-4 gap-1 ">
+                            <img src="svg/shuffle.svg" class="shuffle rounded-full p-2 hover:bg-red-500 transition-all"
+                                alt="">
                             <img src="svg/upArrow.svg" width="30px" class="libPlaylistHeadingArrowBtn ml-auto">
                         </div>
                     </div>
 
                     <ul id="LibrarySongs"
-                        class="playlist flex flex-col gap-3 px-3 mt-3 overflow-y-auto library-expanded">
+                        class="playlist flex flex-col gap-3 px-3 mt-1 overflow-y-auto library-expanded">
 
                     </ul>
 
@@ -47,8 +47,15 @@
         </div>
 
 
-        <div class="right col-span-8 ml-0 px-2 py-0 relative">
-            
+        <div class="right lg:col-span-8 ml-0 px-2 py-0 relative flex">
+            <div class="hamburgerMenu mt-3 flex flex-col gap-3 items-center lg:hidden px-2 ">
+                <img src="musical-note.png" width="40px" class="bg-white p-1 rounded-full">
+                <div class="hamburger flex flex-col gap-1 ">
+                    <div class="hambergerLine1 h-[2px] bg-white w-6 transition-all"></div>
+                    <div class="hambergerLine2 h-[2px] bg-white w-6 transition-all"></div>
+                    <div class="hambergerLine3 h-[2px] bg-white w-6 transition-all"></div>
+                </div>
+            </div>
 
             <div class="playlists bg-[#131212] mt-12 p-2 rounded-md max-h-[90vh] overflow-auto">
 
@@ -56,7 +63,7 @@
                     <div class="popularSongsHeading flex justify-between px-2">
                         <div class="flex gap-3">
                             <h1 class="text-[24px] font-bold hover:underline cursor-pointer ml-2">Popular Songs</h1>
-                            <img src="svg/shuffle.svg" 
+                            <img src="svg/shuffle.svg"
                                 class="shuffle rounded-full p-2 hover:bg-red-500 transition-all cursor-pointer" alt="">
                         </div>
 
@@ -93,7 +100,7 @@
                     </div>
 
                     <ul id="popularArtistsCards" class="dynamicAlbums pl-3 flex gap-2  overflow-x-auto  ">
-                        
+
                     </ul>
                 </div>
 
@@ -102,7 +109,8 @@
         </div>
     </div>
 
-    <div class="playBar bg-black fixed bottom-0  w-full flex justify-between py-2  px-3 gap-5 items-center">
+    <div
+        class="playBar bg-black fixed bottom-0  w-full flex lg:justify-between py-2  px-3 gap-5 items-center justify-center z-30">
         <div class="playBarLeft flex items-center gap-2 w-[30vw]">
             <div class="waves p-2  gap-1 h-[25px] flex items-end">
                 <div class="wave wave1 h-[13px] w-[2px] bg-yellow-400"></div>
@@ -112,17 +120,16 @@
 
             <div class="w-[70px] h-[70px]">
 
-                <img src="black.jpg" alt=""
-                    class="playBarLeftSongPhoto rounded-md object-cover w-full h-full">
+                <img src="black.jpg" alt="" class="playBarLeftSongPhoto rounded-md object-cover w-full h-full">
             </div>
 
 
             <div class="playBArLeftSongDetails">
-                <div class="playBArLeftSongName font-bold text-xl">
-                   
+                <div class="playBArLeftSongName font-bold lg:text-xl text-lg">
+
                 </div>
                 <div class="playBArLeftSongArtist font-semibold text-base text-[#a08d8d]">
-                  
+
                 </div>
             </div>
 
@@ -133,9 +140,10 @@
                 <img src="" alt="" width="35px"
                     class="addToPlaylist border-2 border-white rounded-full p-1  cursor-pointer hidden transition-all">
                 <img src="svg/shuffle.svg"
-                    class="playbarShuffle rounded-full p-2 hover:bg-red-500 transition-all cursor-pointer"  alt="">
+                    class="playbarShuffle rounded-full p-2 hover:bg-red-500 transition-all cursor-pointer" alt="">
                 <img src="svg/previous.svg" alt="" class=" cursor-pointer" id="previous">
-                <img src="svg/play.svg" alt="" class="w-[40px] h-[40px] p-1 bg-white rounded-full cursor-pointer " id="seekbarPlayPause">
+                <img src="svg/play.svg" alt="" class="w-[40px] h-[40px] p-1 bg-white rounded-full cursor-pointer "
+                    id="seekbarPlayPause">
                 <img src="svg/next.svg" alt="" class=" cursor-pointer " id="next">
                 <img src="svg/loop.svg" alt="" class=" cursor-pointer " id="loop">
             </div>
@@ -151,7 +159,7 @@
             </div>
         </div>
 
-        <div class="playBarRight mr-4 ml-10 w-[10vw]">
+        <div class="playBarRight lg:block hidden mr-4 ml-10 w-[10vw]">
             <div class="volumnColumn flex w-full items-center gap-2">
 
                 <img src="svg/volumn.svg" width="30px" height="30px" alt="" class="volumeBtn cursor-pointer">

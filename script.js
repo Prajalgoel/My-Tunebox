@@ -23,18 +23,18 @@ let renderLibSongs = function () {
         li.id = e.id
 
         li.innerHTML = `
-            <span class="font-bold text-lg">${index}</span>
+            <span class="font-bold xl:text-lg text-base">${index}</span>
         
             <div class="songPhoto w-[50px] h-[50px]">
                <img src="${e.songThumnail}" alt="" width="50px" class="rounded-md object-cover w-full h-full">
              </div>
         
             <div class="songDetails">
-                <div class="songName font-bold text-lg">${e.name}</div>
+                <div class="songName font-bold xl:text-lg text-base">${e.name}</div>
                 <div class="songArtist">${e.artist}</div>
             </div>
         
-            <img src="svg/play.svg" alt="" class="playPause p-2 bg-white rounded-full play ml-auto pr-2 ">
+            <img src="svg/play.svg" alt="" class="playPause p-2 bg-white rounded-full play ml-auto pr-2 hidden xl:block ">
             `
         index++
 
@@ -69,6 +69,26 @@ document.querySelector(".popularArtistsHeadingLeftArrow").addEventListener('clic
 
 document.querySelector(".popularArtistsHeadingRightArrow").addEventListener('click', () => {
     document.querySelector("#popularArtistsCards").scrollLeft += 300
+})
+
+document.querySelector('.hamburger').addEventListener('click',(e) => {
+    if (document.querySelector('.left').className.includes("-left-full")) {
+        document.querySelector('.hambergerLine1').style.transform = "rotate(45deg)"
+        document.querySelector('.hambergerLine3').style.transform = "rotate(-45deg)"
+        document.querySelector('.hambergerLine2').style.display = "none"
+        document.querySelector('.left').classList.remove("-left-full")
+        document.querySelector('.left').classList.add("left-0")
+        console.log("hamburger");
+        
+    }else{
+        document.querySelector('.hambergerLine1').style.transform = "rotate(-45deg)"
+        document.querySelector('.hambergerLine3').style.transform = "rotate(45deg)"
+        document.querySelector('.hambergerLine2').style.display = "block"
+        document.querySelector('.left').classList.remove("left-0")
+        document.querySelector('.left').classList.add("-left-full")
+        console.log("hamburger");
+    }
+        
 })
 
 document.querySelector('#seekbarPlayPause').addEventListener('click', () => {
@@ -690,14 +710,14 @@ function renderSongs() {
         div.innerHTML = `
             <div class="album-heading flex gap-3 items-center w-full  p-3  cursor-pointer">
                 <img src="ArtistPhotos/${album.id}.jpg" alt="" class="h-[40px] w-[40px]">
-                <div class="font-semibold text-lg text-white ease-in-out duration-100">
+                <div class="font-semibold xl:text-lg text-base text-white ease-in-out duration-100">
                     ${album.id}</div>
-                <div class="NoOfAlbumSongs">${allsongDetails[album.id].songs.length} songs</div>
+                <div class="NoOfAlbumSongs hidden xl:block">${allsongDetails[album.id].songs.length} songs</div>
                 <div class="ml-auto flex items-center gap-2">
                     <img src="svg/shuffle.svg"
                         class="shuffle rounded-full p-2 hover:bg-red-500 transition-all" alt="">
                     <img src="svg/cross.svg" class="albumCross" alt="">
-                    <img src="svg/upArrow.svg" width="30px" class="albumHeadingArrowBtn ml-auto">
+                    <img src="svg/upArrow.svg" width="30px" class="albumHeadingArrowBtn ml-auto hidden xl:block">
                 </div>
             </div>
 
@@ -714,18 +734,18 @@ function renderSongs() {
             li.id = e.id
 
             li.innerHTML = `
-                <span class="font-bold text-lg">${index}</span>
+                <span class="font-bold xl:text-lg text-base">${index}</span>
             
                 <div class="songPhoto w-[50px] h-[50px]">
                 <img src="${e.songThumnail}" alt="" width="50px" class="rounded-md object-cover w-full h-full">
                 </div>
             
                 <div class="songDetails">
-                    <div class="songName font-bold text-lg">${e.name}</div>
+                    <div class="songName font-bold xl:text-lg text-base">${e.name}</div>
                     
                 </div>
             
-                <img src="svg/play.svg" alt="" class="playPause p-2 bg-white rounded-full play ml-auto pr-2 ">
+                <img src="svg/play.svg" alt="" class="playPause p-2 bg-white rounded-full play ml-auto pr-2 hidden xl:block">
         `
             index++
 
