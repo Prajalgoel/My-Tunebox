@@ -43,15 +43,27 @@ let renderLibSongs = function () {
 }
 
 let playPauseHandler = (e) => {
-    if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
-        audio.pause()
-        songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/play.svg"
-        seekbarPlayPause.src = "svg/play.svg"
-    }
-    else {
+    if (audio.paused) {
         audio.play()
         songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
         seekbarPlayPause.src = "svg/pause.svg"
+        e.target.src = "svg/pause.svg"
+        document.querySelectorAll('.librarySong').forEach((song) => {
+            if (song.id == playedSongId) {
+                song.querySelector('.playPause').src = "svg/pause.svg"
+            }
+        })
+    }
+    else {
+        audio.pause()
+        songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/play.svg"
+        seekbarPlayPause.src = "svg/play.svg"
+        e.target.src = "svg/play.svg"
+        document.querySelectorAll('.librarySong').forEach((song) => {
+            if (song.id == playedSongId) {
+                song.querySelector('.playPause').src = "svg/play.svg"
+            }
+        })
     }
 }
 
@@ -71,24 +83,21 @@ document.querySelector(".popularArtistsHeadingRightArrow").addEventListener('cli
     document.querySelector("#popularArtistsCards").scrollLeft += 300
 })
 
-document.querySelector('.hamburger').addEventListener('click',(e) => {
+document.querySelector('.hamburger').addEventListener('click', (e) => {
     if (document.querySelector('.left').className.includes("-left-full")) {
         document.querySelector('.hambergerLine1').style.transform = "rotate(45deg)"
         document.querySelector('.hambergerLine3').style.transform = "rotate(-45deg)"
         document.querySelector('.hambergerLine2').style.display = "none"
-        document.querySelector('.left').classList.remove("-left-full")
-        document.querySelector('.left').classList.add("left-0")
-        console.log("hamburger");
-        
-    }else{
-        document.querySelector('.hambergerLine1').style.transform = "rotate(-45deg)"
-        document.querySelector('.hambergerLine3').style.transform = "rotate(45deg)"
-        document.querySelector('.hambergerLine2').style.display = "block"
-        document.querySelector('.left').classList.remove("left-0")
-        document.querySelector('.left').classList.add("-left-full")
-        console.log("hamburger");
+        document.querySelector('.left').classList.replace("-left-full", "left-0");
+
     }
-        
+    else {
+        document.querySelector('.hambergerLine1').style.transform = "rotate(0deg)";
+        document.querySelector('.hambergerLine3').style.transform = "rotate(0deg)";
+        document.querySelector('.hambergerLine2').style.display = "block";
+        document.querySelector('.left').classList.replace("left-0", "-left-full");
+    }
+
 })
 
 document.querySelector('#seekbarPlayPause').addEventListener('click', () => {
@@ -96,10 +105,20 @@ document.querySelector('#seekbarPlayPause').addEventListener('click', () => {
         audio.play()
         document.querySelector('#seekbarPlayPause').src = "svg/pause.svg"
         songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
+        document.querySelectorAll('.librarySong').forEach((song) => {
+            if (song.id == playedSongId) {
+                song.querySelector('.playPause').src = "svg/pause.svg"
+            }
+        })
     } else {
         audio.pause()
         document.querySelector('#seekbarPlayPause').src = "svg/play.svg"
         songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/play.svg"
+        document.querySelectorAll('.librarySong').forEach((song) => {
+            if (song.id == playedSongId) {
+                song.querySelector('.playPause').src = "svg/play.svg"
+            }
+        })
     }
 })
 
@@ -116,10 +135,20 @@ document.addEventListener('keydown', (e) => {
             audio.play()
             seekbarPlayPause.src = "svg/pause.svg"
             songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/pause.svg"
+            document.querySelectorAll('.librarySong').forEach((song) => {
+                if (song.id == playedSongId) {
+                    song.querySelector('.playPause').src = "svg/pause.svg"
+                }
+            })
         } else {
             audio.pause()
             seekbarPlayPause.src = "svg/play.svg"
             songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/play.svg"
+            document.querySelectorAll('.librarySong').forEach((song) => {
+                if (song.id == playedSongId) {
+                    song.querySelector('.playPause').src = "svg/play.svg"
+                }
+            })
         }
     }
 })
@@ -190,18 +219,27 @@ document.querySelector('.addToPlaylist').addEventListener('click', () => {
             document.querySelector('.addToPlaylist').style.backgroundColor = "yellow"
             document.querySelector('.addToPlaylist').src = "svg/tick.svg"
             renderLibSongs()
-            if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
-                document.querySelector('#LibrarySongs').lastElementChild.querySelector('.playPause').src = "svg/pause.svg"
-            } else {
-                document.querySelector('#LibrarySongs').lastElementChild.querySelector('.playPause').src = "svg/play.svg"
-            }
-            songInPlaylistPlayedInDOM.querySelector('.playPause').addEventListener('click', () => {
-                if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
-                    document.querySelector('#LibrarySongs').lastElementChild.querySelector('.playPause').src = "svg/pause.svg"
-                } else {
-                    document.querySelector('#LibrarySongs').lastElementChild.querySelector('.playPause').src = "svg/play.svg"
-                }
 
+            if (songInPlaylistPlayedInDOM.querySelector('.playPause').src.endsWith("svg/pause.svg")) {
+                document.querySelectorAll('.librarySong').forEach((song) => {
+                    if (song.id == playedSongId) {
+                        song.querySelector('.playPause').src = "svg/pause.svg"
+                    }
+                })
+            } else {
+                document.querySelectorAll('.librarySong').forEach((song) => {
+                    if (song.id == playedSongId) {
+                        song.querySelector('.playPause').src = "svg/play.svg"
+                    }
+                })
+
+            }
+
+            document.querySelectorAll('.librarySong').forEach((song) => {
+                if (song.id == playedSongId) {
+                    song.querySelector('.playPause').removeEventListener('click', playPauseHandler)
+                    song.querySelector('.playPause').addEventListener('click', playPauseHandler)
+                }
             })
         }
 
@@ -214,12 +252,12 @@ document.querySelector('.addToPlaylist').addEventListener('click', () => {
             allsongDetails.LibrarySongs.songs = allsongDetails.LibrarySongs.songs.filter((song) => song.id != playedSongId)
             document.querySelector('.addToPlaylist').style.backgroundColor = ""
             document.querySelector('.addToPlaylist').src = "svg/plus.svg"
-            songInPlaylistPlayedInDOM.style.display = "none"
+            renderLibSongs()
 
             // storing the song if it is not present in other playlists
 
             for (const key in allsongDetails) {
-                if (key == "deletedSongs" && key == "LibrarySongs") {
+                if (key == "deletedSongs" || key == "LibrarySongs") {
                     continue
                 }
                 allsongDetails[key].songs.forEach((song) => {
@@ -239,17 +277,27 @@ document.querySelector('.addToPlaylist').addEventListener('click', () => {
             allsongDetails.LibrarySongs.songs.push(playedSongInAllSongDetails)
             document.querySelector('.addToPlaylist').style.backgroundColor = "yellow"
             document.querySelector('.addToPlaylist').src = "svg/tick.svg"
-            songInPlaylistPlayedInDOM.style.display = "flex"
+            renderLibSongs()
             allsongDetails["deletedSongs"].songs = allsongDetails["deletedSongs"].songs.filter((song) => song !== playedSongInAllSongDetails)
+            document.querySelectorAll('.librarySong').forEach((song) => {
+                if (song.id == playedSongId) {
+                    if (audio.paused) {
+                        song.querySelector('.playPause').src = "svg/play.svg"
+                    } else {
+                        song.querySelector('.playPause').src = "svg/pause.svg"
+
+                    }
+                    
+                    song.querySelector('.playPause').removeEventListener('click', playPauseHandler)
+                    song.querySelector('.playPause').addEventListener('click', playPauseHandler)
+                }
+            })
         }
     }
 
 
     document.querySelector('.NoOfLibSongs').innerHTML = `${allsongDetails.LibrarySongs.songs.length} songs`
 })
-
-
-
 
 let playSong = function () {
     document.querySelectorAll('.playPause').forEach((btn) => {
@@ -358,20 +406,19 @@ let playNextSong = function (randomIndex = null, randomIndexArray = null, played
             songInPlaylistPlayedInDOM = songInPlaylistPlayedInDOM.parentNode.firstElementChild
             playedSongLink = allsongDetails[playedPlaylist].songs.find((song) => song.id == playedSongId).songLink
 
-
-            document.querySelector('.currentTime').innerHTML = "0:00"
-            seekBarCircle.style.left = "0%"
             playSong()
             audio.pause()
             songInPlaylistPlayedInDOM.querySelector('.playPause').src = "svg/play.svg"
             seekbarPlayPause.src = "svg/play.svg"
 
             audio.addEventListener('ended', () => {
-                playNextSong()
+                playNextSong() 
             })
 
         }
     }
+
+    // remaining
     else {
         if (document.querySelector('#loop').src.endsWith("svg/loop.svg")) {
             randomIndex = Math.floor(Math.random() * (playedPlaylistLength - 0 + 1)) + 0
@@ -427,6 +474,7 @@ document.querySelector('#previous').addEventListener('click', (e) => {
     }
 })
 
+// remoining
 document.querySelectorAll('.shuffle').forEach((shuffle) => {
     shuffle.addEventListener('click', (e) => {
         if (!shuffle.style.backgroundColor) {
@@ -524,11 +572,13 @@ async function getSongs() {
         }
     }
 
+    allsongDetails.LibrarySongs = {}
+    allsongDetails.PopularSongs = {}
+
     for (const link of folderlinks) {
         async function openfolders() {
             if (link.href.includes('Library')) {
-                allsongDetails.LibrarySongs = {}
-
+                
                 let a = await fetch(link.href)
                 let response = await a.text()
 
@@ -557,7 +607,7 @@ async function getSongs() {
             }
 
             else if (link.href.includes('Popular%20Songs')) {
-                allsongDetails.PopularSongs = {}
+                
 
                 let a = await fetch(link.href)
                 let response = await a.text()
